@@ -1,5 +1,8 @@
 import { getAuth } from "firebase-admin/auth"
 import { app } from "../config/firebase.js"
+import User from "../models/user.model.js"
+import crypto from "crypto"
+import { createConnection } from "mongoose"
 
 export const login = async (req, res) => {
     try {
