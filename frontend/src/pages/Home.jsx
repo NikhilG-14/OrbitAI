@@ -30,7 +30,7 @@ function Home() {
                         <p className="text-[13px] text-slate-500">Please login to continue using the app</p>
                     </div>
 
-                    <button className='w-full flex items-center justify-center gap-3 py-[11px] rounded-xl text-sm font-medium text-black/60 bg-white hover:bg-gray-200 shadow-lg duration-150 cursor-pointer'>
+                    <button className='w-full flex items-center justify-center gap-3 py-[11px] rounded-xl text-sm font-medium text-black/90 bg-white hover:bg-gray-200 shadow-lg duration-150 cursor-pointer' onClick={googleLogin}>
                         <FcGoogle size={15} />
                         Continue with Google
                     </button>
