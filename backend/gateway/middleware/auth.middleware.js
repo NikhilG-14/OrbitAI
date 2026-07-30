@@ -17,3 +17,5 @@ const protect  = async (req, res, next) => {
         res.status(500).json({ message: `Protect error ${error}` });
     }
 }
+
+export default protect;
