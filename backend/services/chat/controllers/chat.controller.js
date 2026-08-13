@@ -23,7 +23,7 @@ export const getConversations = async (req, res) => {
             userId: userId
         }).sort({updatedAt: -1})
 
-        return res.status(200).json(conversation)
+        return res.status(200).json(conversations)
     } catch (error) {
         return res.status(500).json({message: `Get conversation error ${error}`})
     }
