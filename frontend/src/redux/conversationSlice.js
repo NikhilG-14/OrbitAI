@@ -8,13 +8,13 @@ const conversationSlice = createSlice({
     },
     reducers: {
         setConversations: (state, action) => {
-            state.conversations = action.payload;
+            state.conversations = action.payload
         },
         addConversation: (state, action) => {
-            state.conversations.unshift(action.payload);
+            state.conversations.unshift(action.payload)
         },
         setSelectedConversation: (state, action) => {
-            state.selectedConversation = action.payload;
+            state.selectedConversation = action.payload
         }
     }
 })

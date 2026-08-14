@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SideBar from "../components/SideBar";
 import ChatArea from "../components/ChatArea";
 import Artifact from "../components/Artifact";
+import { setUserData } from "../redux/userSlice";
 
 function Home() {
     const { userData } = useSelector((state) => state.user);
@@ -15,7 +16,7 @@ function Home() {
 
     const handleLogin = async (token) => {
         try {
-            const { data } = api.post("/api/auth/login", { token });
+            const { data } = await api.post("/api/auth/login", { token });
             dispatch(setUserData(data));
         } catch (error) {
             console.log(error);
