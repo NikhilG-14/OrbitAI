@@ -13,29 +13,50 @@ function ChatInput() {
   const {messages} = useSelector(state => state.message)
   const dispatch = useDispatch()
   const handleSendMessage = async() => {
+    if (!value.trim()) return
+
+    const promptText = value.trim()
     let conversation = selectedConversation
-    if(!conversation) {
+
+    if (!conversation) {
       const conv = await createConversation()
-      dispatch(setSelectedConversation(conv))
-      dispatch(addConversation(conv))
-      conversation = conv
+      if (conv && conv._id) {
+        dispatch(addConversation(conv))
+        dispatch(setSelectedConversation(conv))
+        conversation = conv
+      }
     }
 
-    if(conversation.title == "New Chat") {
-      await updateConversation({id:conversation?._id, title: value.trim()})
-      dispatch(setConvTitle({conversationId:conversation?._id, title:value.slice(0,40)}))
+    if (conversation && conversation.title === "New Chat") {
+      const title = promptText.slice(0, 40)
+
+      await updateConversation({
+        id: conversation._id,
+        title
+      })
+
+      conversation = {
+        ...conversation,
+        title
+      }
+
+      dispatch(setSelectedConversation(conversation))
+      dispatch(setConvTitle({
+        conversationId: conversation._id,
+        title
+      }))
     }
 
     const payload = {
-      prompt: value.trim(), conversationId: conversation?._id
+      prompt: promptText,
+      conversationId: conversation?._id
     }
 
-    dispatch(addMessage({role:"user", content:value.trim()}))
-
+    dispatch(addMessage({ role: "user", content: promptText }))
     setValue("")
 
     const data = await sendMessage(payload)
-    dispatch(addMessage({role:"assistant", content:data}))
+    dispatch(addMessage({ role: "assistant", content: data }))
     console.log(data)
   }
   return (

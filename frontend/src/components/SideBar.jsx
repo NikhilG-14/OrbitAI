@@ -7,6 +7,7 @@ import {
     setConversations,
     setSelectedConversation,
 } from "../redux/conversationSlice";
+import { setMessages } from "../redux/messageSlice";
 import { createConversation } from "../features/createConversation";
 import logOut from "../features/logOut";
 import { setUserData } from "../redux/userSlice";
@@ -27,7 +28,11 @@ function SideBar() {
 
     const handleCreateConversation = async () => {
         const data = await createConversation();
-        dispatch(addConversation(data));
+        if (data && data._id) {
+            dispatch(addConversation(data));
+            dispatch(setSelectedConversation(data));
+            dispatch(setMessages([]));
+        }
     };
 
     if(collapsed) {
@@ -40,7 +45,7 @@ function SideBar() {
                 </button>
 
                 <button className= 'flex items-center justify-center w-9 h-9 rounded-xl text-slate-500 hover:text-slate-200 hover:bg-white/[0.05] transition-colors duration-150 bg-transparent border-none cursor-pointer'
-                onClick={() => dispatch(setSelectedConversation(null))}>
+                onClick={handleCreateConversation}>
                     <Plus size={17}/>
                 </button>
 
@@ -110,7 +115,7 @@ function SideBar() {
                     </span>
                     <button
                         className="flex items-center justify-center w-7 h-7 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/[0.05] transition-colors duration-150 bg-transparent border-none cursor-pointer"
-                        onClick={() => dispatch(setSelectedConversation(null))}
+                        onClick={handleCreateConversation}
                     >
                         <PenSquare size={14} />
                     </button>
@@ -119,7 +124,7 @@ function SideBar() {
                 <div className="px-4 pt-4 pb-1">
                     <button
                         className="w-full flex items-center justify-center gap-2 text-sm font-medium text-white bg-linear-to-br from-indigo-500 to-violet-700 rounded-xl py-[10px] border-none cursor-pointer hover:opacity-90 transition-opacity duration-150"
-                        onClick={() => dispatch(setSelectedConversation(null))}
+                        onClick={handleCreateConversation}
                     >
                         <Plus size={15} />
                         New Chat

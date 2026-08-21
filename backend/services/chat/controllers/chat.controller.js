@@ -34,7 +34,7 @@ export const updateConversation = async (req, res) => {
         const {id, title} = req.body
         const conversation = await Conversation.findByIdAndUpdate(id, {
             title
-        })
+        }, { new: true })
 
         return res.status(200).json(conversation)
     } catch (error) {
